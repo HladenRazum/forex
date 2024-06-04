@@ -1,7 +1,7 @@
 import { Response, Request } from 'express'
 import { EXCHANGE_RATES_BASE_URL } from '../lib/constants'
 import { ConvertCurrencySchema } from '../validation/convertCurrency.schema'
-import { StatusCodes } from '../lib/StatusCodes.enum'
+import { StatusCodes } from '../lib/statusCodes.enum'
 
 const convertRatesController = async (req: Request, res: Response) => {
   const { amount, from, to } = req.query
@@ -12,12 +12,14 @@ const convertRatesController = async (req: Request, res: Response) => {
     })
   }
 
+  // Validate query params with zod schema
   const parsedQueryParams = ConvertCurrencySchema.safeParse({
     amount,
     from,
     to,
   })
 
+  // Some of the query params has an error
   if (!parsedQueryParams.success) {
     return res.status(StatusCodes.BadRequest).json({
       message: 'Invalid parameters',
@@ -33,6 +35,7 @@ const convertRatesController = async (req: Request, res: Response) => {
     )
     const data = await response.json()
 
+    // Error result from exchangerate API
     if (data.result == 'error') {
       throw new Error(
         "Bad request. Please make sure that you're providing the correct parameters"
