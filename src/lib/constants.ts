@@ -1,14 +1,4 @@
-export const ENDPOINTS = {
-  RATES: '/rates',
-  CONVERT: '/convert',
-}
-
-export const EXCHANGE_RATES_API_URL = 'https://v6.exchangerate-api.com/v6'
-
-export const STATUS_CODES = {
-  SUCESS: 200,
-  BAD_REQUEST: 400,
-}
+export const EXCHANGE_RATES_BASE_URL = 'https://v6.exchangerate-api.com/v6'
 
 export const SUPPORTED_COUNTRY_CODES = [
   'AED',
