@@ -4,7 +4,7 @@ dotenv.config()
 
 import express, { type Express } from 'express'
 import ratesController from './controllers/rates.controller'
-import convertRatesController from './controllers/convertRates.controller'
+import convertController from './controllers/convert.controller'
 import { Endpoints } from './lib/endpoints.enum'
 
 const PORT = process.env.PORT || 5000
@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 5000
 const app: Express = express()
 
 app.get([Endpoints.Rates, Endpoints.RatesWithCodeParams], ratesController)
-app.get(Endpoints.Convert, convertRatesController)
+app.get(Endpoints.Convert, convertController)
 
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`)
