@@ -1,4 +1,8 @@
-import { DEFAULT_CURRENCY, SUPPORTED_CURRENCY_CODES } from '../lib/constants'
+import {
+  BASE_URL,
+  DEFAULT_CURRENCY,
+  SUPPORTED_CURRENCY_CODES,
+} from '../lib/constants'
 import { ErrorMessages } from '../lib/erorrMessages.enum'
 import { StatusCodes } from '../lib/statusCodes.enum'
 
@@ -31,7 +35,7 @@ describe('GET /rates endpoint', () => {
           Math.ceil(Math.random() * SUPPORTED_CURRENCY_CODES.length)
         ]
       const response = await fetch(
-        `http://localhost:5000/rates/${randomSuportedCurrency}`
+        `${BASE_URL}/rates/${randomSuportedCurrency}`
       )
       const data = await response.json()
 
@@ -41,13 +45,11 @@ describe('GET /rates endpoint', () => {
     })
   })
 
-  describe("Should throw an error if invalid parameter for 'currencyCode' is provided", () => {
-    it('Should throw an error when the type of parameter is number', async () => {
+  describe("Should return status 400 and object with an error key if invalid parameter for 'currencyCode' is provided", () => {
+    it('Should return status 400 and object with an error key if the type of parameter is number', async () => {
       const invalidTypeParameter: number = 1
 
-      const response = await fetch(
-        `http://localhost:5000/rates/${invalidTypeParameter}`
-      )
+      const response = await fetch(`${BASE_URL}/rates/${invalidTypeParameter}`)
 
       const data: ResponseDataError = await response.json()
 
@@ -55,15 +57,13 @@ describe('GET /rates endpoint', () => {
       expect(data.error).toBe(ErrorMessages.InvalidParameterOrCurrency)
     })
 
-    it('Should throw an error when the type of parameter is an object', async () => {
+    it('Should return status 400 and object with an error key if type of parameter is an object', async () => {
       const invalidTypeParameter: object = {
         amount: 10,
         currency: 'BGN',
       }
 
-      const response = await fetch(
-        `http://localhost:5000/rates/${invalidTypeParameter}`
-      )
+      const response = await fetch(`${BASE_URL}/rates/${invalidTypeParameter}`)
 
       const data: ResponseDataError = await response.json()
 
@@ -71,12 +71,10 @@ describe('GET /rates endpoint', () => {
       expect(data.error).toBe(ErrorMessages.InvalidParameterOrCurrency)
     })
 
-    it('Should throw an error when the type of parameter is an array', async () => {
+    it('Should return status 400 and object with an error key if the type of parameter is an array', async () => {
       const invalidTypeParameter: any[] = [1, 2, 3]
 
-      const response = await fetch(
-        `http://localhost:5000/rates/${invalidTypeParameter}`
-      )
+      const response = await fetch(`${BASE_URL}/rates/${invalidTypeParameter}`)
 
       const data: ResponseDataError = await response.json()
 
@@ -84,12 +82,10 @@ describe('GET /rates endpoint', () => {
       expect(data.error).toBe(ErrorMessages.InvalidParameterOrCurrency)
     })
 
-    it('Should throw an error when the type of parameter is a boolean', async () => {
+    it('Should return status 400 and object with an error key if the type of parameter is a boolean', async () => {
       const invalidTypeParameter: boolean = true
 
-      const response = await fetch(
-        `http://localhost:5000/rates/${invalidTypeParameter}`
-      )
+      const response = await fetch(`${BASE_URL}/rates/${invalidTypeParameter}`)
 
       const data: ResponseDataError = await response.json()
 
@@ -97,12 +93,10 @@ describe('GET /rates endpoint', () => {
       expect(data.error).toBe(ErrorMessages.InvalidParameterOrCurrency)
     })
 
-    it('Should throw an error when the parameter is string, but NOT among the supported currency codes', async () => {
+    it('Should return status 400 and object with an error key if the parameter is string, but NOT among the supported currency codes', async () => {
       const unsupporedCurrency: string = 'Unsupported'
 
-      const response = await fetch(
-        `http://localhost:5000/rates/${unsupporedCurrency}`
-      )
+      const response = await fetch(`${BASE_URL}/rates/${unsupporedCurrency}`)
       const data: ResponseDataError = await response.json()
 
       expect(SUPPORTED_CURRENCY_CODES.indexOf(unsupporedCurrency)).toBe(-1)

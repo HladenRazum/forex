@@ -1,5 +1,7 @@
 export const EXCHANGE_RATES_BASE_URL = 'https://v6.exchangerate-api.com/v6'
 export const DEFAULT_CURRENCY = 'USD'
+export const DEFAULT_PORT = 5000
+export const BASE_URL = `http://localhost:${DEFAULT_PORT}`
 
 // Got the information from "https://www.exchangerate-api.com/docs/supported-codes-endpoint"
 export const SUPPORTED_CURRENCY_CODES = [
