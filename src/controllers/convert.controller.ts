@@ -2,13 +2,14 @@ import { Response, Request } from 'express'
 import { ConvertCurrencySchema } from '../validation/convertCurrency.schema'
 import { StatusCodes } from '../lib/statusCodes.enum'
 import { convertCurrenciesServices } from '../services/convert.services'
+import { ErrorMessages } from '../lib/erorrMessages.enum'
 
 const convertRatesController = async (req: Request, res: Response) => {
   const { amount, from, to } = req.query
 
   if (!amount || !from || !to) {
     return res.status(StatusCodes.BadRequest).json({
-      error: 'Missing required query parameters',
+      error: ErrorMessages.MissingQueryParameters,
     })
   }
 
@@ -41,7 +42,7 @@ const convertRatesController = async (req: Request, res: Response) => {
     error instanceof Error ? console.log(error?.stack) : console.log(error)
 
     res.status(StatusCodes.BadRequest).json({
-      error: error?.toString() || 'Bad request',
+      error: error?.toString() || ErrorMessages.BadRequest,
     })
   }
 }

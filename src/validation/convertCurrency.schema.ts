@@ -1,5 +1,5 @@
 import z from 'zod'
-import { SUPPORTED_COUNTRY_CODES } from '../lib/constants'
+import { SUPPORTED_CURRENCY_CODES } from '../lib/constants'
 
 export const ConvertCurrencySchema = z.object({
   amount: z.coerce
@@ -10,7 +10,7 @@ export const ConvertCurrencySchema = z.object({
       message: '"from" must be a string',
     })
     .toUpperCase()
-    .refine((value: string) => SUPPORTED_COUNTRY_CODES.indexOf(value) !== -1, {
+    .refine((value: string) => SUPPORTED_CURRENCY_CODES.indexOf(value) !== -1, {
       message: `Currency is invalid or not supported`,
     }),
   to: z
@@ -18,7 +18,7 @@ export const ConvertCurrencySchema = z.object({
       message: '"to" must be a string',
     })
     .toUpperCase()
-    .refine((value: string) => SUPPORTED_COUNTRY_CODES.indexOf(value) !== -1, {
+    .refine((value: string) => SUPPORTED_CURRENCY_CODES.indexOf(value) !== -1, {
       message: `Currency is invalid or not supported`,
     }),
 })

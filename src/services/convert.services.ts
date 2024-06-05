@@ -1,4 +1,5 @@
 import { EXCHANGE_RATES_BASE_URL } from '../lib/constants'
+import { ErrorMessages } from '../lib/erorrMessages.enum'
 import { ConvertCurrenciesResponse } from '../types/responseTypes'
 import { ConvertCurrencyParams } from '../validation/convertCurrency.schema'
 
@@ -15,15 +16,13 @@ export const convertCurrenciesServices = {
     )
 
     if (!response.ok) {
-      throw new Error('Something went wrong')
+      throw new Error(ErrorMessages.SomethingWentWrong)
     }
 
     const data: ConvertCurrenciesResponse = await response.json()
 
     if (data.result == 'error') {
-      throw new Error(
-        "Bad request. Please make sure that you're providing the correct parameters"
-      )
+      throw new Error(ErrorMessages.BadRequestInvalidParameters)
     }
 
     return data.conversion_rate

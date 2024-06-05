@@ -2,8 +2,8 @@ import { Request, Response } from 'express'
 import { StatusCodes } from '../lib/statusCodes.enum'
 import { CurrencyCodeSchema } from '../validation/currencyCode.schema'
 import { ratesServices } from '../services/rates.serices'
-
-const DEFAULT_CURRENCY = 'USD'
+import { DEFAULT_CURRENCY } from '../lib/constants'
+import { ErrorMessages } from '../lib/erorrMessages.enum'
 
 const ratesController = async (req: Request, res: Response) => {
   const currencyCode = req.params.currencyCode ?? DEFAULT_CURRENCY
@@ -12,7 +12,7 @@ const ratesController = async (req: Request, res: Response) => {
 
   if (parsedData.error) {
     return res.status(StatusCodes.BadRequest).json({
-      error: 'Invalid parameter or unsupported currency provided',
+      error: ErrorMessages.InvalidParameterOrCurrency,
     })
   }
 

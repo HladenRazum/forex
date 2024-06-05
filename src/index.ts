@@ -12,11 +12,17 @@ const PORT = process.env.PORT || 5000
 const app: Express = express()
 
 // Handle both rates/ and rates/currencyCode
-app.get([Endpoints.Rates, Endpoints.RatesWithCodeParams], ratesController)
+app.get(
+  [Endpoints.Rates, Endpoints.RatesWithCodeParams],
+  (req, res, next) => {
+    console.log(req.method)
+    console.log(res.statusCode)
+    next()
+  },
+  ratesController
+)
 app.get(Endpoints.Convert, convertController)
 
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`)
 })
-
-// TODO: Add types for api responses
