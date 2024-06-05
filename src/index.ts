@@ -11,6 +11,7 @@ const PORT = process.env.PORT || 5000
 
 const app: Express = express()
 
+// Handle both rates/ and rates/currencyCode
 app.get([Endpoints.Rates, Endpoints.RatesWithCodeParams], ratesController)
 app.get(Endpoints.Convert, convertController)
 

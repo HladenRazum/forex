@@ -1,5 +1,5 @@
 export enum Endpoints {
   Rates = '/rates',
-  RatesWithCodeParams = '/rates/:code',
+  RatesWithCodeParams = '/rates/:currencyCode',
   Convert = '/convert',
 }

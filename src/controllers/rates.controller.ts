@@ -1,24 +1,26 @@
 import { Request, Response } from 'express'
-import { EXCHANGE_RATES_BASE_URL } from '../lib/constants'
 import { StatusCodes } from '../lib/statusCodes.enum'
+import { CurrencyCodeSchema } from '../validation/currencyCode.schema'
+import { ratesServices } from '../services/rates.serices'
 
-const API_KEY = process.env.EXCHANGE_RATE_API_KEY
+const DEFAULT_CURRENCY = 'USD'
 
 const ratesController = async (req: Request, res: Response) => {
-  const defaultBaseCurrency = 'USD'
+  const currencyCode = req.params.currencyCode ?? DEFAULT_CURRENCY
 
-  const baseCurrency = req.params?.code || defaultBaseCurrency
+  const parsedData = CurrencyCodeSchema.safeParse(currencyCode)
 
-  // TODO: accept a params object? :CODE and validate it
-  // provide a defaut baseCurrency if not params are given
+  if (parsedData.error) {
+    return res.status(StatusCodes.BadRequest).json({
+      error: 'Invalid parameter or unsupported currency provided',
+    })
+  }
 
   try {
-    const response = await fetch(
-      `${EXCHANGE_RATES_BASE_URL}/${API_KEY}/latest/${baseCurrency}`
-    )
-    const rates = await response.json()
+    const rates = await ratesServices.getRates(parsedData.data)
 
     res.status(StatusCodes.Success).json({
+      'base-currency': parsedData.data,
       rates,
     })
   } catch (error) {

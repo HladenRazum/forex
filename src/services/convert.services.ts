@@ -1,11 +1,6 @@
 import { EXCHANGE_RATES_BASE_URL } from '../lib/constants'
 import { ConvertCurrenciesResponse } from '../types/responseTypes'
-
-type GetExchangeAmountParamsType = {
-  from: string
-  to: string
-  amount: number
-}
+import { ConvertCurrencyParams } from '../validation/convertCurrency.schema'
 
 const API_KEY = process.env.EXCHANGE_RATE_API_KEY
 
@@ -14,7 +9,7 @@ export const convertCurrenciesServices = {
     from,
     to,
     amount,
-  }: GetExchangeAmountParamsType) => {
+  }: ConvertCurrencyParams): Promise<number> => {
     const response = await fetch(
       `${EXCHANGE_RATES_BASE_URL}/${API_KEY}/pair/${from}/${to}/${amount}`
     )
@@ -25,7 +20,6 @@ export const convertCurrenciesServices = {
 
     const data: ConvertCurrenciesResponse = await response.json()
 
-    // Error result from exchangerate API
     if (data.result == 'error') {
       throw new Error(
         "Bad request. Please make sure that you're providing the correct parameters"

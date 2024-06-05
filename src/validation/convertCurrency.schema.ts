@@ -7,7 +7,7 @@ export const ConvertCurrencySchema = z.object({
     .min(1, 'Amount must be a positive number'),
   from: z
     .string({
-      message: '"from" must be a stirng',
+      message: '"from" must be a string',
     })
     .toUpperCase()
     .refine((value: string) => SUPPORTED_COUNTRY_CODES.indexOf(value) !== -1, {
@@ -15,10 +15,12 @@ export const ConvertCurrencySchema = z.object({
     }),
   to: z
     .string({
-      message: '"to" must be a stirng',
+      message: '"to" must be a string',
     })
     .toUpperCase()
     .refine((value: string) => SUPPORTED_COUNTRY_CODES.indexOf(value) !== -1, {
       message: `Currency is invalid or not supported`,
     }),
 })
+
+export type ConvertCurrencyParams = z.infer<typeof ConvertCurrencySchema>
