@@ -8,11 +8,11 @@ Documentation for ExchangeRateApi: https://www.exchangerate-api.com/docs
 
 ## Project Setup
 
-- clone the repository
-- go inside the folder and run `$npm install`
-- create a <b>.env</b> file and copy the values from the <b>.env.sample</b> file
-- the value for <b>EXCHANGE_RATE_API_KEY</b> is your API key and you can get one for free at https://www.exchangerate-api.com/
-- the value for <b>PORT</b> is optional as will default to 5000
+1. Clone the repository
+2. Go inside the folder and run `$npm install`
+3. Create a <b>.env</b> file and copy the values from the <b>.env.sample</b> file
+4. The value for <b>EXCHANGE_RATE_API_KEY</b> is your API key and you can get one for free at https://www.exchangerate-api.com/
+5. The value for <b>PORT</b> is optional as will default to 5000
 
 ## Project Start
 
